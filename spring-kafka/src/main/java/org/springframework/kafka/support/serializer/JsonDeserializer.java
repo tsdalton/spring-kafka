@@ -49,6 +49,7 @@ import com.fasterxml.jackson.databind.ObjectReader;
  * @author Gary Russell
  * @author Yanming Zhou
  * @author Elliot Kennedy
+ * @author Thomas Dalton
  */
 public class JsonDeserializer<T> implements ExtendedDeserializer<T> {
 
@@ -228,6 +229,9 @@ public class JsonDeserializer<T> implements ExtendedDeserializer<T> {
 				throw new SerializationException("Can't deserialize data [" + Arrays.toString(data) +
 						"] from topic [" + topic + "]", e);
 			}
+			catch (JsonParseException e) {
+				return null;
+			}
 		}
 	}
 
@@ -246,6 +250,9 @@ public class JsonDeserializer<T> implements ExtendedDeserializer<T> {
 		catch (IOException e) {
 			throw new SerializationException("Can't deserialize data [" + Arrays.toString(data) +
 					"] from topic [" + topic + "]", e);
+		}
+		catch (JsonParseException e) {
+			return null;
 		}
 	}
 
